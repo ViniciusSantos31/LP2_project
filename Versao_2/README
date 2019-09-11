@@ -1,3 +1,18 @@
-Ainda não há nada para ver aqui!
+Codigos da segunda versão da API de socket em C++
+-------------------------------------------------
+=================================================
 
-volte mais tarde!
+      classes implementadas ate o momento:
+
+--InetAddress
+--ServerSocket
+
+=================================================
+-------------------------------------------------
+=================================================
+
+classes a serem implementadas ainda nesta versão:
+
+--Socket
+
+=================================================
