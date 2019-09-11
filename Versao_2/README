@@ -5,7 +5,8 @@ Codigos da segunda versão da API de socket em C++
       classes implementadas ate o momento:
 
 --InetAddress
---ServerSocket
+--ServerSocket(falta os metodos "accept" 
+                                    e "connect")
 
 =================================================
 -------------------------------------------------
