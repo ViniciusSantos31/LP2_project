@@ -23,7 +23,7 @@ Socket::Socket(InetAddress *addr, int port)  throw (IOException){
     this->connect(this->remoteAddr);
 
     };
-//Cria um socket e o conecta para um número de porta e nome de host específico
+//Cria um socket e o conecta para um nÃºmero de porta e nome de host especÃ­fico
 Socket::Socket(string hostName, int port) throw (IOException, UnknownHostException){
     this->remotePort = port;
 
@@ -46,10 +46,6 @@ void Socket::connect(InetAddress *remoteAddr)throw (IOException, UnknownHostExce
     }
 
 };
-    //Envia a string no array msg para o socket remoto.
-void Socket::operator<<(const char* msg) throw (IOException){
-// NAO ENTENDI ESSA SOBRECARGA AQUI TA FODA
-};
 
   //Envia os bytes armazenados no array msg, no intervalo [0 size], para o socket remoto.
 int Socket::send(char * msg,int size) throw (IOException){
@@ -65,10 +61,7 @@ int Socket::send(char * msg,int size) throw (IOException){
     return this->descritorRemote;
 
 };
-    //Ler a string do socket remoto e armazena no array msg
-void Socket::operator>>(const char* msg) throw (IOException)
-{
-};
+
     //Ler size bytes do socket remoto e armazena no array msg
 int Socket::recv(char * msg,int size) throw (IOException)
 {
@@ -78,20 +71,20 @@ int Socket::recv(char * msg,int size) throw (IOException)
 	}
     return message_length;
 };
-    //Retorna o endereço em que o socket está conectado
+    //Retorna o endereÃ§o em que o socket estÃ¡ conectado
 InetAddress* Socket::getInetAddress(){
     return this->remoteAddr;
 };
 
-    //Retorna o endereço local (LOCALHOST)em que o socket está "Amarrado" (BIND)
+    //Retorna o endereÃ§o local (LOCALHOST)em que o socket estÃ¡ "Amarrado" (BIND)
 InetAddress* Socket::getLocalAddress(){
     return this->localAddr;
 };
-    //Retorna o número porta local em que o socket está amarrado (BIND)
+    //Retorna o nÃºmero porta local em que o socket estÃ¡ amarrado (BIND)
 int Socket::getLocalPort(){
 	return this->localPort;
 };
-    //Retorna o número da porta remota em que o socket está conectado
+    //Retorna o nÃºmero da porta remota em que o socket estÃ¡ conectado
 int Socket::getPort(){
     return this->remotePort;
 };
