@@ -7,13 +7,8 @@ Codigos da segunda versão da API de socket em C++
 --InetAddress
 --ServerSocket(falta os metodos "accept" 
                                     e "connect")
+--Socket
 
 =================================================
 -------------------------------------------------
-=================================================
-
-classes a serem implementadas ainda nesta versão:
-
---Socket
-
 =================================================
