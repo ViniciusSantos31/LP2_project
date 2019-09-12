@@ -1,6 +1,7 @@
 #include <iostream>
 #include "InetAddress.h"
 #include "ServerSocket.h"
+#include "Socket.h"
 #include <ws2tcpip.h>
 #include <winsock2.h>
 #include <cstdlib>
@@ -21,33 +22,100 @@ int main(){
 		cout << "Falha ao Iniciar\n Error: " << error << endl;
 		return 1;
 	}
-	
 	try{
+	
+
+		int porta;
+		Socket * socket;
+		InetAddress * Serv_E;
+		int menu;
+		char ip[30];
 		
-		string host;
-		string host_addr;
+		cout << "1. Servidor\n2. Cliente\n";
+		cin >> menu;
 		
-		cout << "(get by name)Digite o host: ";
-		cin >> host;
+		switch (menu){
 		
-		cout << "(get by address)Digite o endereco do host: ";
-		cin >> host_addr;
-		
-		InetAddress *myHost = InetAddress::getLocalHost();
-		InetAddress *otherHost = InetAddress::getByName(host); //byname
-		InetAddress *otherHost_addr = InetAddress::getByAddress(host_addr); //byaddress
-		
-		cout << "My localhost" << endl;
-		cout << endl <<"Meu Host: " << myHost->getHostAddress() << endl;
-		cout << "Nome: " << myHost->getHostName() << endl << endl;
-		
-		cout << "Get by Name" << endl;
-		cout << "Nome: " << otherHost->getHostName() << endl;
-		cout << "Endereço: " << otherHost->getHostAddress() << endl << endl;
-		
-		cout << "Get by Address" << endl;
-		cout << "Endereco: " << otherHost_addr->getHostAddress() << endl;
-		cout << "Nome: " << otherHost_addr->getHostName() << endl;
+			case 1:
+				
+				cout << "Qual a porta: ";
+				cin >> porta;
+				
+				try{
+					ServerSocket * server;
+					server = new ServerSocket(porta);
+				}catch(UnknownHostException &e){
+					
+                	cout << e.what() << endl;
+                	return 1;
+				
+				}catch (IOException &ioe){
+					cout << ioe.what() << endl;
+					return 1;
+				}
+				cout<<endl;
+				//system("pause");
+				break;
+			case 2:
+				
+				int n_i;
+				
+				cout << "1. Conectar por Nome\n2. Conectar por IP\n";
+				cin >> n_i;
+				switch (n_i){
+				case 1:
+					
+					cout << "nome do server: ";
+					cin >> ip;
+					cout << "porta do server: ";
+					cin >> porta;
+					
+					try{
+						
+						Serv_E = InetAddress::getByName(ip);
+						socket = new Socket(Serv_E, porta);
+						
+						
+					}catch(UnknownHostException &uhe){
+						
+	                	cout << uhe.what() << endl;
+	                	return 1;
+	            	}catch(IOException &uhe){
+	            		
+	                	cout << uhe.what() << endl;
+	                	return 1;
+	            	}
+	            	break;
+	            case 2:
+	            	
+	            	
+	            	cout << "IP do server: ";
+					cin >> ip;
+					cout << "porta do server: ";
+					cin >> porta;
+					
+					try{
+						
+						Serv_E = InetAddress::getByAddress(ip);
+						socket = new Socket(Serv_E, porta);
+						
+						socket->send("tomar no cu!", 12);
+						
+					}catch(UnknownHostException &uhe){
+						
+	                	cout << uhe.what() << endl;
+	                	return 1;
+	            	}catch(IOException &uhe){
+	            		
+	                	cout << uhe.what() << endl;
+	                	return 1;
+	            	}
+	            	break;
+	            	
+            	break;
+    			
+				}
+		}
 				
 	}catch (UnknownHostException &e){
 		cout << e.what() << endl;
