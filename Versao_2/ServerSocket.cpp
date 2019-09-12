@@ -1,11 +1,12 @@
 #include "ServerSocket.h"
 #include "InetAddress.h"
+#include "Socket.h"
 #define MAX_CONECTIONS 3
 
 ServerSocket::ServerSocket()throw (IOException){
 	
 	this->descritor = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	if (this->descritor == -1) //Se o descritor for -1 deu erraldo a bagaça...kkk
+	if (this->descritor == -1) //Se o descritor for -1 deu erraldo a bagaÃ§a...kkk
 	{
 		throw IOException("error");
 	}
@@ -24,6 +25,10 @@ ServerSocket::ServerSocket(int porta) throw (IOException){
 	
 	this->bind(porta);
 	
+	this->listen();
+	
+	this->accept();
+	
 
 }
 
@@ -31,7 +36,7 @@ void ServerSocket::bind(int porta) throw (IOException){ //amarra a porta
 
 	this->Local_Address->ip_address.sin_port = htons(porta); //preenche o campo da porta do meu endereco local
 	
-	//esses 2 pontos antes do bind() significa que é pra usar a funcao do C que esta na biblioteca do winsock
+	//esses 2 pontos antes do bind() significa que Ã© pra usar a funcao do C que esta na biblioteca do winsock
 	if (::bind(this->descritor, (struct sockaddr *)&(*this->Local_Address).ip_address, sizeof(this->Local_Address->ip_address)) == -1) //se o bind retorna -1 fudeo
 /*	if (::bind(meu_socket, (SOCKADDR *)&sockaddr_in, sizeof(sockaddr_in) == -1) ISSO SERIA EM C
 	meu_socket = descrtior da classe
@@ -49,4 +54,28 @@ void ServerSocket::listen() throw (IOException){
 		
 		throw IOException("To moco");
 	}
+}
+
+Socket* ServerSocket::accept() throw (IOException){
+	
+	cout << "To esperando..." << endl;
+	Socket* remote_sock;
+	remote_sock = new Socket();
+	
+	int len_remote = sizeof(remote_sock->remoteAddr->ip_address);
+	
+	remote_sock->remoteAddr = InetAddress::getLocalHost();
+	
+	remote_sock->descritor = ::accept(this->descritor, (struct sockaddr *)&remote_sock->remoteAddr->ip_address, &len_remote);
+	
+	if (remote_sock->descritor == -1){
+		
+		throw IOException("Erro ao aceitar");
+		
+	}
+	
+	cout << "Conexao aceita...UHUUL" << endl;
+	
+	return remote_sock;
+	
 }
